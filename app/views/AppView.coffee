@@ -27,23 +27,21 @@ class window.AppView extends Backbone.View
   hit: ->
     @model.get('playerHand').hit()
     if @model.get('playerHand').scores()[0] > 21
+      @.trigger('lose', @)
       alert "bust"
       location.reload()
 
   stand: ->
-    # @model.get('playerHand').stand()
     @model.get('dealerHand').at(0).flip()
     while @model.get('dealerHand').scores()[0] < 17
       @model.get('dealerHand').hit()
       console.log(@model.get('dealerHand').scores())
     if @model.get('dealerHand').scores()[0] > 21 or @model.get('dealerHand').scores()[0] < @model.get('playerHand').scores()[0]
       @.trigger('win', @)
-      # @model.get('chips').win()
       alert "you win"
     else if @model.get('dealerHand').scores()[0] is @model.get('playerHand').scores()[0]
       alert "you tied"
     else
-      # @model.get('chips').lose()
       @.trigger('lose', @)
       alert "you lose"
     location.reload()

@@ -1,13 +1,15 @@
 class window.Chips extends Backbone.Model
 
   initialize: ->
-    @set 'chips', 100
+    @set 'chips', parseInt(localStorage.getItem('chips')) or 100
     @set 'bet', 0
 
-  win: ->
-    @chips += @bet
-    #set chips to chips + bet
+  win: =>
+    temp = parseInt(this.get('chips'))
+    this.set 'chips', temp += parseInt(this.get('bet'))
+    localStorage.setItem('chips', parseInt(this.get('chips')))
 
-  lose: ->
-    @chips -= @bet
-    #set chips to chips - bet
+  lose: =>
+    temp = parseInt(this.get('chips'))
+    this.set 'chips', temp -= parseInt(this.get('bet'))
+    localStorage.setItem('chips', parseInt(this.get('chips')))
