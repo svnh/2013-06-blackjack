@@ -39,4 +39,3 @@ class window.AppView extends Backbone.View
     else
       alert "you lose"
     location.reload()
-
