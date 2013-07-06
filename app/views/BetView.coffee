@@ -3,12 +3,12 @@ class window.ChipsView extends Backbone.View
   className: 'chips'
 
   template: _.template '<h2><span class="chips"></span></h2>
-    <form name="input" method="get"> <input type="text" name="bet">
-      <input type="submit" class = "bet" value="Bet">
+    <form name="input" method="get"> <input type="text" class ="binput" name="bet">
+      <input type="button" class = "bet" value="Bet">
     </form>'
 
   events:
-    "click .bet": -> @model.set('bet', 3) #do not reset page and set bet to input
+    "click .bet": -> @model.set('bet', $('.binput').val())
 
   initialize: ->
      @model.on 'add remove change', => @render()
