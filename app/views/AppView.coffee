@@ -11,7 +11,11 @@ class window.AppView extends Backbone.View
     "click .hit-button": -> @hit()
     "click .stand-button": -> @stand()
 
-  initialize: -> @render()
+  initialize: ->
+    @render()
+    @.on 'win', @model.get('chips').win
+    @.on 'lose', @model.get('chips').lose
+
 
   render: ->
     @$el.children().detach()
@@ -33,11 +37,13 @@ class window.AppView extends Backbone.View
       @model.get('dealerHand').hit()
       console.log(@model.get('dealerHand').scores())
     if @model.get('dealerHand').scores()[0] > 21 or @model.get('dealerHand').scores()[0] < @model.get('playerHand').scores()[0]
-      #trigger model win
+      @.trigger('win', @)
+      # @model.get('chips').win()
       alert "you win"
     else if @model.get('dealerHand').scores()[0] is @model.get('playerHand').scores()[0]
-      #trigger model lose
       alert "you tied"
     else
+      # @model.get('chips').lose()
+      @.trigger('lose', @)
       alert "you lose"
     location.reload()
